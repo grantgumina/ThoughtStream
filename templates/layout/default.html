@@ -8,15 +8,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- 3rd Party Libraries  -->
+    <!--  CSS -->
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
     <link rel="stylesheet" type="text/css" href="css/gsdk.css" />
-    <link rel="stylesheet" type="text/css" href="css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="css/custom.css" />
 
+    <!--  Javascript -->
     <script src="js/jquery-1.10.2.js" type="text/javascript"></script>
     <script src="js/jquery-ui-1.10.4.custom.min.js"
-            type="text/javascript"></script>
+    type="text/javascript"></script>
     <script src="js/jquery-ui.custom.min.js" type="text/javascript"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
     <script src="js/get-shit-done.js" type="text/javascript"></script>
@@ -27,15 +28,37 @@
 
 </head>
 <body>
+    {{! Import the contents of header.html from partials}}
+    {{> header }}
 
-    <div class="container">
+    <div class="container-fluid">
+        <div class="row">
+            <!--  Sidebar -->
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar" id="-gg-tags-list">
+                    <li class="col-sm-10 col-md-11">
+                        <button class="btn btn-block btn-sm btn-info btn-round"
+                                id="-gg-new-tag-button">
+                            New Tag
+                        </button>
+                    </li>
+                    <li>
+                        <h6 class="-gg-sidebar-header">Tags</h6>
+                    </li>
+                    <li class="-gg-tag" id="-gg-tag-1">
+                        <h6 class="small">#culture</h6>
+                        <input type="text" value placeholder="New Tag"
+                               class="form-control hidden"/>
+                    </li>
+                </ul>
+            </div> <!--  end sidebar -->
 
-        {{! Import the contents of header.html from partials}}
-        {{> header }}
+            {{! Every view gets inserted here }}
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+                {{{ content }}}
+            </div>
 
-        {{! Every view gets inserted here }}
-        {{{ content }}}
-
+        </div> <!--  end row-->
     </div>
 
     {{! Import the contents of footer.html from partials}}
