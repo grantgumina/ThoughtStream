@@ -1,3 +1,62 @@
 {{!< layout/default}}
 
-<h1>NEW CONTENT HERE</h1>
+<!--  DOCUMENT TILES -->
+<div class="-gg-tiles">
+    <!--  Content Section Group -->
+    <div class="row">
+        <div class="col-md-4"></div>
+        <ul class="-gg-section-group nav nav-pills col-md-4">
+            <li class="active" id="-gg-all-button"><a href="#">All</a></li>
+            <li id="-gg-notes-button"><a href="#">Notes</a></li>
+            <li id="-gg-essays-button"><a href="#">Essays</a></li>
+        </ul>
+        <div class="col-md-4"></div>
+    </div>
+
+    <!--  Content Cards -->
+    <div class="-gg-content-cards col-md-9 col-md-offset-1">
+        <!-- <div class="card col-md-3 -gg-essay-card" id="-gg-card-0" z-default='1' z-hover='2'>
+            <h5>Title</h5>
+            <p class="small">Lorem ipsum dolor sit amet, consectetur adipiscing
+                elit</p>
+            <span>9/28/2015</span>
+        </div> -->
+    </div>
+
+    <!--  FLOATIE -->
+    <ul id="menu" class="mfb-component--br  mfb-slidein-spring" data-mfb-toggle="hover" style="display: block;">
+        <li class="mfb-component__wrap">
+            <a href="#" class="mfb-component__button--main">
+                <i class="mfb-component__main-icon--resting ion-plus-round"></i>
+                <i class="mfb-component__main-icon--active ion-close-round"></i>
+            </a>
+            <ul class="mfb-component__list">
+                <li class="-gg-new-note-button">
+                    <a href="#" data-mfb-label="New Note" class="mfb-component__button--child">
+                        <i class="mfb-component__child-icon ion-compose"></i>
+                    </a>
+                </li>
+                <li class="-gg-new-essay-button">
+                    <a href="#" data-mfb-label="New Essay" class="mfb-component__button--child">
+                        <i class="mfb-component__child-icon ion-ios-bookmarks"></i>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<!--  DOCUMENT EDITOR -->
+<div class="-gg-editor-container">
+    <button href="#" class="btn btn-block btn-lg btn-info btn-simple -gg-editor-back-button">Back</button>
+
+    <div class="-gg-editor-tag-div">
+        <input type="text" value placeholder="New Tag" class="col-md-2 -gg-editor-add-tag-input"/>
+        <div class="col-md-3 -gg-editor-tags"></div>
+    </div>
+
+    <input type="text" value placeholder="Title" class="form-control -gg-editor-title" />
+    <div class="-gg-editor">
+
+    </div>
+</div>

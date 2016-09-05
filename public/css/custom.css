@@ -28,15 +28,45 @@
     cursor: pointer;
 }
 
-.-gg-tag input {
-    display: none;
-}
-
-.-gg-new-tag input {
-    display: block;
+.-gg-tag.active {
+    color: blue;
 }
 
 /* NEW TAGS */
 .-gg-new-tag h6 {
     display: none;
+}
+
+/* CONTENT PICKER VIEW */
+
+/* SECTION GROUP */
+.-gg-section-group li {
+    width: 75px;
+    text-align: center;
+}
+
+/* CONTENT CARDS */
+.-gg-content-cards {
+    margin-top: 5px;
+}
+
+.card {
+    cursor: pointer;
+}
+
+.card h5, .card p, .card span {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+/* EDITOR */
+.-gg-editor-title {
+    margin-bottom: 10px;
+
+}
+
+.-gg-editor-tag-div {
+    margin-bottom: 30px;
 }
