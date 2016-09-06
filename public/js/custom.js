@@ -24,7 +24,7 @@ let tagsJSON = [
 ];
 
 let documentPreviewsForTagIdJSON = {};
-documentPreviewsForTagIdJSON['rexxxkd0'] = [ // Tag ID
+documentPreviewsForTagIdJSON['rexxxkd0'] = [ // Culture
      {
         'id': '893fxjx0',
         'title': 'JBP - MM1',
@@ -33,6 +33,28 @@ documentPreviewsForTagIdJSON['rexxxkd0'] = [ // Tag ID
         'tags': [{'id': 'rexxxkd0', 'name': 'culture'}, {'id': 'sfg00sad', 'name': 'history'}],
         'date': 'Fri May 04 2015 01:17:07 GMT-0700 (PDT)'
     },
+    {
+        'id': '199437adx',
+        'title': 'My Heritage',
+        'preview': 'Lorem ipsum dolor sit amet, consectetur adipiscing',
+        'type': 'essay',
+        'tags': [{'id': 'rexxxkd0', 'name': 'culture'}, {'id': 'X3bxadf2', 'name': 'music'}],
+        'date': 'Th July 14 2016 05:17:07 GMT-0700 (PDT)'
+    }
+];
+
+documentPreviewsForTagIdJSON['sfg00sad'] = [ // History
+    {
+       'id': '893fxjx0',
+       'title': 'JBP - MM1',
+       'preview': 'Lorem ipsum dolor sit amet, consectetur adipiscing',
+       'type': 'note',
+       'tags': [{'id': 'rexxxkd0', 'name': 'culture'}, {'id': 'sfg00sad', 'name': 'history'}],
+       'date': 'Fri May 04 2015 01:17:07 GMT-0700 (PDT)'
+   }
+];
+
+documentPreviewsForTagIdJSON['X3bxadf2'] = [
     {
         'id': '199437adx',
         'title': 'My Heritage',
@@ -120,6 +142,8 @@ function renderTag(tag ) {
 
         if (tagId == "")
             tagId = e.target.parentNode.id;
+
+        showTiles();
         showDocumentsForTag(tagId);
 
         // Reset filter UI
@@ -256,19 +280,19 @@ function newNote(tagId) {
 }
 
 function newEssay(tagId) {
-    var activeTagId = $('#-gg-tags-list li.active').attr('id');
-    var newNoteId = $('.-gg-note-card').length + 1;
-
-    // create new blank note in JSON
-    documentPrewviewJSON[activeTagId].push({
-        'id': newNoteId,
-        'title': 'New Essay',
-        'preview': 'Click here to start writing',
-        'type': 'essay',
-        'date': moment()
-    });
-
-    showDocumentsForTag(activeTagId);
+    // var activeTagId = $('#-gg-tags-list li.active').attr('id');
+    // var newNoteId = $('.-gg-note-card').length + 1;
+    //
+    // // create new blank note in JSON
+    // documentPrewviewJSON[activeTagId].push({
+    //     'id': newNoteId,
+    //     'title': 'New Essay',
+    //     'preview': 'Click here to start writing',
+    //     'type': 'essay',
+    //     'date': moment()
+    // });
+    //
+    // showDocumentsForTag(activeTagId);
 }
 
 function checkIfTagExists(newTagText) {
@@ -431,6 +455,8 @@ $(document).ready(function() {
 
             // Update this document with the new tag
             cardsJSON[cardId]['tags'].push(newTag);
+
+            // TODO - Update the previews
 
             var tagNameLabelsHTML = buildDocumentTagsHTML(cardId);
             $('.-gg-editor-tags').html(tagNameLabelsHTML);
