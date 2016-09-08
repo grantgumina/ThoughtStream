@@ -28,7 +28,7 @@ documentPreviewsForTagIdJSON['rexxxkd0'] = [ // Culture
      {
         'id': '893fxjx0',
         'title': 'JBP - MM1',
-        'preview': 'Lorem ipsum dolor sit amet, consectetur adipiscing',
+        'preview': 'Hello world!',
         'type': 'note',
         'tags': [{'id': 'rexxxkd0', 'name': 'culture'}, {'id': 'sfg00sad', 'name': 'history'}],
         'date': 'Fri May 04 2015 01:17:07 GMT-0700 (PDT)'
@@ -36,7 +36,7 @@ documentPreviewsForTagIdJSON['rexxxkd0'] = [ // Culture
     {
         'id': '199437adx',
         'title': 'My Heritage',
-        'preview': 'Lorem ipsum dolor sit amet, consectetur adipiscing',
+        'preview': 'FOOBAR NOOBAR',
         'type': 'essay',
         'tags': [{'id': 'rexxxkd0', 'name': 'culture'}, {'id': 'X3bxadf2', 'name': 'music'}],
         'date': 'Th July 14 2016 05:17:07 GMT-0700 (PDT)'
@@ -47,7 +47,7 @@ documentPreviewsForTagIdJSON['sfg00sad'] = [ // History
     {
        'id': '893fxjx0',
        'title': 'JBP - MM1',
-       'preview': 'Lorem ipsum dolor sit amet, consectetur adipiscing',
+       'preview': 'Hello world!',
        'type': 'note',
        'tags': [{'id': 'rexxxkd0', 'name': 'culture'}, {'id': 'sfg00sad', 'name': 'history'}],
        'date': 'Fri May 04 2015 01:17:07 GMT-0700 (PDT)'
@@ -58,7 +58,7 @@ documentPreviewsForTagIdJSON['X3bxadf2'] = [
     {
         'id': '199437adx',
         'title': 'My Heritage',
-        'preview': 'Lorem ipsum dolor sit amet, consectetur adipiscing',
+        'preview': 'FOOBAR NOOBAR',
         'type': 'essay',
         'tags': [{'id': 'rexxxkd0', 'name': 'culture'}, {'id': 'X3bxadf2', 'name': 'music'}],
         'date': 'Th July 14 2016 05:17:07 GMT-0700 (PDT)'
@@ -413,7 +413,7 @@ $(document).ready(function() {
         var newPreviewIndex = getDocumentPreviewIndexForDocumentId(activeTagId, cardId);
 
         documentPreviewsForTagIdJSON[activeTagId][newPreviewIndex]['title'] = cardsJSON[cardId]['title'];
-        documentPreviewsForTagIdJSON[activeTagId][newPreviewIndex]['preview'] = cardsJSON[cardId]['body'].substring(1, 10);
+        documentPreviewsForTagIdJSON[activeTagId][newPreviewIndex]['preview'] = cardsJSON[cardId]['body'].substring(0, 10);
 
         console.log(documentPreviewsForTagIdJSON);
 
