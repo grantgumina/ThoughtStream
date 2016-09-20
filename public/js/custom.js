@@ -348,7 +348,7 @@ function getDocumentPreviewIndexForDocumentId(tagId, documentId) {
 $(document).ready(function() {
 
     quill = new Quill('.-gg-editor', {
-        theme: 'snow'
+        theme: 'bubble'
     });
 
     $('.-gg-editor-container').hide();
