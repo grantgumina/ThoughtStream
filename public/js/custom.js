@@ -126,8 +126,8 @@ function renderTag(tag ) {
             var newTagText = $($(tagObject).contents()[3]).val();
 
             // Update the tag data structure
-            var numTags = tagsJSON['tags'].length;
-            tagsJSON['tags'][numTags - 1]['name'] = newTagText;
+            var numTags = tagsJSON.length;
+            tagsJSON[numTags - 1]['name'] = newTagText;
 
             // Make UI changes
             $($(tagObject).contents()[1]).html(newTagText);
@@ -421,8 +421,10 @@ $(document).ready(function() {
         showTiles();
     });
 
+    // Add new tag
     $('.-gg-editor-add-tag-input').keypress(function(e) {
         if (e.which == 13) {
+            console.log('enter');
             var cardId = $('.-gg-editor-add-tag-input').attr('id').split('-')[6];
             var tagCount = tagsJSON.length;
 
@@ -440,7 +442,6 @@ $(document).ready(function() {
             if (tempId != '') {
                 // Tag exists, make sure to update the ID to the original tag ID
                 newTag['id'] = tempId;
-
             } else {
                 // Tag doesn't exist, so add it to the user's collection
                 tagsJSON.push(newTag);
