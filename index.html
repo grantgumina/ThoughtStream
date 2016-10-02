@@ -5,59 +5,118 @@
     <title>Vue</title>
     <!-- CSS -->
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/custom.css">
 </head>
 
 <body>
+
+    <!--  Templates -->
+    <script type="text/x-template" id="modal-template">
+        <transition name="modal">
+            <div class="modal-mask">
+                <div class="modal-wrapper">
+                    <div class="modal-container">
+
+                        <div class="modal-header">
+                            <slot name="header">
+                                default header
+                            </slot>
+                        </div>
+
+                        <div class="modal-body">
+                            <slot name="body">
+                                default body
+                            </slot>
+                        </div>
+
+                        <div class="modal-footer">
+                            <slot name="footer">
+                                default footer
+                                <button class="modal-default-button" @click="$emit('close')">
+                                    OK
+                                </button>
+                            </slot>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
+    </script>
+
     <!-- navigation bar -->
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <a class="navbar-brand"><i class="glyphicon glyphicon-bullhorn"></i> Vue Events Bulletin Board</a>
+            <a class="navbar-brand"></i> ThoughtStream</a>
         </div>
     </nav>
-    <!-- main body of our application -->
-    <div class="container" id="events">
-        <!-- add an event form -->
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3>Add an Event</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <input class="form-control" placeholder="Event Name" v-model="event.name">
-                    </div>
-                    <div class="form-group">
-                        <textarea class="form-control" placeholder="Event Description" v-model="event.description"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <input type="date" class="form-control" placeholder="Date" v-model="event.date">
-                    </div>
-                    <button class="btn btn-primary" v-on:click="addEvent">Submit</button>
-                </div>
+
+    <div class="container-fluid" id="thoughstream">
+
+        <!--  Sidebar -->
+        <div class="col-sm-3 col-md-2 sidebar">
+            <div class="col-sm-10 col-md-11">
+                <button class="btn btn-block btn-sm btn-info btn-round" id="-gg-new-tag-button"> New Tag </button>
             </div>
+            <br/>
+            <h3 class="-gg-sidebar-header">Tags</h3>
+
+            <ul class="nav nav-sidebar" id="tags-list">
+            </ul>
         </div>
-        <!-- show the events -->
-        <div class="col-sm-6">
-            <div class="list-group">
-                <a href="#" class="list-group-item" v-for="event in events">
-                    <h4 class="list-group-item-heading">
-                        <i class="glyphicon glyphicon-bullhorn"></i>
-                        {{ event.name }}
-                    </h4>
-                    <h5>
-                        <i class="glyphicon glyphicon-calendar" v-if="event.date"></i>
-                        {{ event.date }}
-                    </h5>
-                    <p class="list-group-item-text" v-if="event.description">{{ event.description }}</p>
-                    <button class="btn btn-xs btn-danger" v-on:click="deleteEvent(event)">Delete</button>
-                </a>
+        <!--  end sidebar -->
+
+        <!-- Main Window  -->
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
+            <!-- Begin Row -->
+            <div class="row">
+                <!-- New Document Button -->
+                <div class="col-md-3 btn-group">
+                    <button type="button" class="btn btn-success dropdown-toggle"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">New</button>
+                    <div class="dropdown-menu">
+                        <a @click="showModal = true" class="dropdown-item" href="#" v-on:click="addDocument()">New Note</a>
+                        <a @click="showModal = true" class="dropdown-item" href="#" v-on:click="addDocument()">New Essay</a>
+                    </div>
+                </div>
+
+                <!-- End New Document Button -->
+
+                <!-- Content Filter Buttons -->
+                <ul class="col-md-3 col-md-offset-2 horizontal">
+                    <li><a href="#" v-on:click="showAll()">All</a></li> |
+                    <li><a href="#" v-on:click="showNotes()">Notes</a></li> |
+                    <li><a href="#" v-on:click="showEssays()">Essays</a></li>
+                </ul>
+                <!--  End Content Filter Buttons -->
+
             </div>
+            <!-- End Row -->
+
+            <!-- Document Tiles -->
+            <div class="row document-group">
+                <div class="card col-md-3" v-for="doc in allDocuments">
+                    <h5>{{doc.title}}</h5>
+                    <p class="small">{{getDocumentPreviewText(doc.body)}}</p>
+                    <p class="small">{{doc.date}}</p>
+                </div>
+            </div>
+            <!--  End Document Tiles-->
+
         </div>
     </div>
-    <!-- JS -->
-    <script src="node_modules/vue/dist/vue.js"></script>
-    <script src="node_modules/vue-resource/dist/vue-resource.js"></script>
-    <script src="app.js"></script>
+
+    <!-- New Document Modal Content -->
+    <modal v-if="showModal" @close="showModal = false">
+        <h3 slot="header">New Document</h3>
+    </modal>
+    <!-- End New Document Modal Content -->
+
+<!-- JS -->
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="node_modules/vue/dist/vue.js"></script>
+<script src="node_modules/vue-resource/dist/vue-resource.js"></script>
+<script src="app.js"></script>
 </body>
 
 </html>
