@@ -2,7 +2,7 @@
   "name": "thoughtstream",
   "version": "0.0.1",
   "description": "my thoughts - in a stream",
-  "main": "server.js",
+  "main": "app.js",
   "dependencies": {
     "handlebars": "^4.0.5",
     "hapi": "^14.2.0",
@@ -13,7 +13,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "author": "grant j gumina",
   "license": "ISC"
