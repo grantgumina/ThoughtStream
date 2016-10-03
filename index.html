@@ -13,8 +13,8 @@
     <!--  Templates -->
     <script type="text/x-template" id="modal-template">
         <transition name="modal">
-            <div class="modal-mask" @click="close" v-show="show" transition="modal">
-                <div class="modal-container" @click.stop>
+            <div class="modal-mask">
+                <div class="modal-container">
 
                     <div class="modal-header">
                         <h3>New Post</h3>
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="modal-footer text-right">
-                        <button class="modal-default-button" @click="savePost()">
+                        <button class="modal-default-button" @click="$emit('close')">
                             Save
                         </button>
                     </div>
@@ -52,7 +52,7 @@
 
         <!-- New Document Modal Content -->
         <!-- v-show="showModal" -->
-        <modal :show.sync="showModal">
+        <modal v-if="showModal" @close="showModal = false">
             <h3 slot="header">New Document</h3>
         </modal>
         <!-- End New Document Modal Content -->

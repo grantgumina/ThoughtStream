@@ -5,6 +5,7 @@ Vue.component('modal', {
     methods: {
         close: function () {
             this.show = false;
+            // this.showModal = false;
         },
         savePost: function () {
             // Insert AJAX call here...
