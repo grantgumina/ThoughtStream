@@ -4,11 +4,15 @@
   "description": "my thoughts - in a stream",
   "main": "app.js",
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "handlebars": "^4.0.5",
     "hapi": "^14.2.0",
     "inert": "^4.0.1",
+    "jquery": "^3.1.1",
     "mfb": "^0.12.0",
-    "vision": "^4.1.0"
+    "vision": "^4.1.0",
+    "vue": "^2.0.1",
+    "vue-resource": "^1.0.3"
   },
   "devDependencies": {},
   "scripts": {

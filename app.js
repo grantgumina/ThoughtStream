@@ -1,7 +1,24 @@
 // register modal component
 Vue.component('modal', {
-  template: '#modal-template'
-})
+    template: '#modal-template',
+    props: ['show'],
+    methods: {
+        close: function () {
+            this.show = false;
+        },
+        savePost: function () {
+            // Insert AJAX call here...
+            this.close();
+        }
+    },
+    ready: function () {
+        document.addEventListener("keydown", (e) => {
+            if (this.show && e.keyCode == 27) {
+                this.close();
+            }
+        });
+    }
+});
 
 new Vue({
 
@@ -102,6 +119,17 @@ new Vue({
         // New Document
         addDocument: function(e) {
             console.log("ADD DOCUMENT");
+            console.log("showModal: " + this.showModal);
+            // this.allDocuments.push({
+            //     'title': 'JBP - MM2',
+            //     'body': '2 - Hello world!',
+            //     'type': 'note',
+            //     'tags': [
+            //         { 'id': 'rexxxkd0', 'name': 'culture' },
+            //         { 'id': 'sfg00sad', 'name': 'history' }
+            //     ],
+            //     'date': 'Fri May 04 2016 01:17:07 GMT-0700 (PDT)'
+            // });
         },
 
         // Document Filters
