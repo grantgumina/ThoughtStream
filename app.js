@@ -1,15 +1,24 @@
 // register modal component
 Vue.component('modal', {
     template: '#modal-template',
-    props: ['show'],
+    data: function () {
+        return {
+            title: '',
+            body: '',
+        }
+    },
     methods: {
         close: function () {
-            this.show = false;
-            // this.showModal = false;
+            this.$emit('close');
+            this.title = '';
+            this.body = '';
+            this.showModal = false;
         },
-        savePost: function () {
-            // Insert AJAX call here...
+        showNewDocumentModal: function() {
+            console.log(this.title);
+            console.log(this.body);
             this.close();
+            main.addDocument();
         }
     },
     ready: function () {
@@ -21,7 +30,7 @@ Vue.component('modal', {
     }
 });
 
-new Vue({
+var main = new Vue({
 
     // We want to target the div with an id of 'events'
     el: '#thoughstream',
@@ -121,6 +130,7 @@ new Vue({
         addDocument: function() {
             console.log("ADD DOCUMENT");
             console.log("showModal: " + this.showModal);
+
             // this.allDocuments.push({
             //     'title': 'JBP - MM2',
             //     'body': '2 - Hello world!',

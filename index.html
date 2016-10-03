@@ -25,15 +25,24 @@
 
                         <div class="modal-body">
                             <slot name="body">
-                                default body
+                                <label class="form-label">
+                                    Title
+                                    <input v-model="title" class="form-control">
+                                </label>
+                                <label class="form-label">
+                                    Body
+                                    <textarea v-model="body" rows="5" class="form-control"></textarea>
+                                </label>
                             </slot>
                         </div>
 
                         <div class="modal-footer">
                             <slot name="footer">
-                                default footer
+                                <button class="modal-default-button" @click="showNewDocumentModal()">
+                                    Save
+                                </button>
                                 <button class="modal-default-button" @click="$emit('close')">
-                                    OK
+                                    Close
                                 </button>
                             </slot>
                         </div>
