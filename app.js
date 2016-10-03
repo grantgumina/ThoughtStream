@@ -118,7 +118,7 @@ new Vue({
         // },
 
         // New Document
-        addDocument: function(e) {
+        addDocument: function() {
             console.log("ADD DOCUMENT");
             console.log("showModal: " + this.showModal);
             // this.allDocuments.push({
@@ -131,6 +131,8 @@ new Vue({
             //     ],
             //     'date': 'Fri May 04 2016 01:17:07 GMT-0700 (PDT)'
             // });
+
+            // $emit('close');
         },
 
         // Document Filters
