@@ -1,32 +1,128 @@
-// register modal component
+// Register modal component
 Vue.component('modal', {
     template: '#modal-template',
+});
+
+Vue.component('note-modal', {
+    template: '#note-modal',
+
     data: function () {
         return {
-            title: '',
-            body: '',
+            newTag: { id: '', name: '' },
         }
     },
+
+    computed: {
+        sanitizedNewTag: function() {
+            return { 'id': this.newTag.id, 'name': this.newTag.name.trim() };
+        }
+    },
+
+    props: ['doc'],
+
     methods: {
+
         close: function () {
+
+            console.log('DOC:');
+            console.log(this.doc);
+
             this.$emit('close');
-            this.title = '';
-            this.body = '';
-            this.showModal = false;
+            this.newTag = { id: '', name: '' };
+            this.showNoteModal = false;
+
+            main.selectedDoc = {};
         },
-        showNewDocumentModal: function() {
+
+        addDocument: function() {
             console.log(this.title);
             console.log(this.body);
+
+            // Check for title
+            if (this.title == '' || !this.title) {
+                alert('Notes must have a title');
+                return;
+            }
+
+            // Check for content
+            if (this.body == '' || !this.body) {
+                alert('Notes must have content');
+                return;
+            }
+
+            // Check for tags
+            if (!this.tags || this.tags.length() == 0) {
+                alert('Notes must be tagged');
+                return;
+            }
+
+            // Add to document library
+            main.allDocuments.push({
+                'id': main.generateGuid(),
+                'title': this.title,
+                'body': this.body,
+                'type': 'note',
+                'tags': this.tags,
+                'date': Date.now()
+            });
+
             this.close();
-            main.addDocument();
+        },
+
+        addTag: function() {
+            var tag = {};
+
+            // Check if tag is null/blank
+            if (!this.newTag || this.sanitizedNewTag.name == "") {
+                console.log("Blank tags not allowed");
+                this.newTag = { id: '', name: '' };
+                return;
+            }
+
+            // Check to make sure tag is just one word
+            if (this.sanitizedNewTag.name.indexOf(" ") != -1) {
+                console.log("Tags must be one word");
+                this.newTag = { id: '', name: '' };
+                return;
+            }
+
+            // Check if document is already tagged with this tag
+            if (this.doc) {
+                for (var i = 0; i < this.doc.tags.length; i++) {
+                    tag = this.doc.tags[i];
+
+                    if (tag.name.toLowerCase() == this.sanitizedNewTag.name.toLowerCase()) {
+                        console.log('Document is already tagged');
+                        this.newTag = { id: '', name: '' };
+                        return;
+                    }
+                }
+            }
+
+            // Search if tag already exists
+            for (var i = 0; i < main.allTags.length; i++) {
+                var t = main.allTags[i];
+
+                // Tag already exists
+                if (t.name.toLowerCase() == this.sanitizedNewTag.name.toLowerCase()) {
+                    console.log('Tag already exists');
+                    this.newTag = t;
+                    break;
+                }
+            }
+
+            // Generate new tag ID =
+            console.log(this.sanitizedNewTag.name);
+            this.doc.tags.push(this.sanitizedNewTag);
+            console.log(this.doc.tags);
+
+            // Clear input
+            this.newTag = { id: '', name: '' };
         }
     },
+
     ready: function () {
-        document.addEventListener("keydown", (e) => {
-            if (this.show && e.keyCode == 27) {
-                this.close();
-            }
-        });
+        console.log('Modal ready');
     }
 });
 
@@ -39,7 +135,8 @@ var main = new Vue({
     // for the application
     data: {
         // Flag for showing new document modal window
-        showModal: false,
+        showNoteModal: false,
+        showNewEssayModal: false,
 
         // Tag Model
         tag: { id: '', name: '' },
@@ -72,6 +169,16 @@ var main = new Vue({
                 'date': 'Th July 14 2016 05:17:07 GMT-0700 (PDT)'
             }
         ],
+
+        // Selected document
+        selectedDoc: {
+            'id': '',
+            'title': '',
+            'body': '',
+            'type': '',
+            'tags': [],
+            'date': '',
+        },
     },
 
     // Anything within the ready function will run when the application loads
@@ -111,38 +218,13 @@ var main = new Vue({
 
         },
 
-        // Adds an event to the existing events array
-        // addEvent: function() {
-        //     if (this.event.name) {
-        //         this.events.push(this.event);
-        //         this.event = { name: '', description: '', date: '' };
-        //     }
-        // },
-        //
-        // deleteEvent: function(e) {
-        //     console.log(e);
-        //     if (confirm("Are you sure you want to delete this event?")) {
-        //         this.events.splice(e, 1);
-        //     }
-        // },
+        // Show document user clicked on
+        showDocument: function(doc) {
+            console.log("User clicked on document");
+            console.log(doc.title);
 
-        // New Document
-        addDocument: function() {
-            console.log("ADD DOCUMENT");
-            console.log("showModal: " + this.showModal);
-
-            // this.allDocuments.push({
-            //     'title': 'JBP - MM2',
-            //     'body': '2 - Hello world!',
-            //     'type': 'note',
-            //     'tags': [
-            //         { 'id': 'rexxxkd0', 'name': 'culture' },
-            //         { 'id': 'sfg00sad', 'name': 'history' }
-            //     ],
-            //     'date': 'Fri May 04 2016 01:17:07 GMT-0700 (PDT)'
-            // });
-
-            // $emit('close');
+            this.selectedDoc = doc;
+            this.showNoteModal = true;
         },
 
         // Document Filters
@@ -161,6 +243,16 @@ var main = new Vue({
         // Helper functions
         getDocumentPreviewText: function(documentBody) {
             return documentBody.substring(0, 12);
+        },
+
+        generateGuid: function() {
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+            }
+            return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+            s4() + '-' + s4() + s4() + s4();
         },
     }
 });

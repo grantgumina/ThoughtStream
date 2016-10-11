@@ -11,45 +11,71 @@
 <body>
 
     <!--  Templates -->
+    <!-- Generic Modal Template -->
     <script type="text/x-template" id="modal-template">
         <transition name="modal">
             <div class="modal-mask">
                 <div class="modal-wrapper">
                     <div class="modal-container">
-
-                        <div class="modal-header">
-                            <slot name="header">
-                                default header
-                            </slot>
-                        </div>
-
-                        <div class="modal-body">
-                            <slot name="body">
-                                <label class="form-label">
-                                    Title
-                                    <input v-model="title" class="form-control">
-                                </label>
-                                <label class="form-label">
-                                    Body
-                                    <textarea v-model="body" rows="5" class="form-control"></textarea>
-                                </label>
-                            </slot>
-                        </div>
-
-                        <div class="modal-footer">
-                            <slot name="footer">
-                                <button class="modal-default-button" @click="showNewDocumentModal()">
-                                    Save
-                                </button>
-                                <button class="modal-default-button" @click="$emit('close')">
-                                    Close
-                                </button>
-                            </slot>
-                        </div>
+                        <slot></slot>
                     </div>
                 </div>
             </div>
         </transition>
+    </script>
+
+    <script type="text/x-template" id="note-modal">
+        <modal>
+            <div class="modal-header">
+                <slot name="header">
+                    default header
+                </slot>
+            </div>
+
+            <div class="modal-body">
+                <slot name="body">
+                    <!-- Tags -->
+                    <label class="form-label">
+                        Tags
+                    </label>
+
+                    <input class="form-control" v-model="newTag.name" />
+
+                    <button class="btn btn-small modal-default-button" @click="addTag()">
+                        Add
+                    </button>
+
+                    <ul class="horizontal tags">
+                        <li v-for="tag in doc.tags" class="tag">
+                            <span class="label label-info">{{tag.name}}</span>
+                        </li>
+                    </ul>
+
+                    <!-- Title -->
+                    <label class="form-label">
+                        Title
+                        <input v-model="doc.title" class="form-control">
+                    </label>
+
+                    <!-- Body -->
+                    <label class="form-label">
+                        Body
+                        <textarea v-model="doc.body" rows="5" class="form-control"></textarea>
+                    </label>
+                </slot>
+            </div>
+
+            <div class="modal-footer">
+                <slot name="footer">
+                    <!-- <button class="btn btn-small btn-row modal-default-button" @click="addDocument()">
+                        Save
+                    </button> -->
+                    <button class="btn btn-small btn-row modal-default-button" @click="close()">
+                        Close
+                    </button>
+                </slot>
+            </div>
+        </modal>
     </script>
 
     <!-- navigation bar -->
@@ -62,10 +88,9 @@
     <div class="container-fluid" id="thoughstream">
 
         <!-- New Document Modal Content -->
-        <!-- v-show="showModal" -->
-        <modal v-if="showModal" @close="showModal = false">
+        <note-modal v-show="showNoteModal" @close="showNoteModal = false" :doc.sync="selectedDoc">
             <h3 slot="header">New Document</h3>
-        </modal>
+        </note-modal>
         <!-- End New Document Modal Content -->
 
         <!--  Sidebar -->
@@ -79,7 +104,7 @@
             <ul class="nav nav-sidebar" id="tags-list">
             </ul>
         </div>
-        <!--  end sidebar -->
+        <!--  End sidebar -->
 
         <!-- Main Window  -->
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2">
@@ -90,11 +115,10 @@
                     <button type="button" class="btn btn-success dropdown-toggle"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">New</button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#" @click="showModal = true">New Note</a>
-                        <a class="dropdown-item" href="#" @click="showModal = true">New Essay</a>
+                        <a class="dropdown-item" href="#" @click="showNoteModal = true">New Note</a>
+                        <a class="dropdown-item" href="#" @click="showNoteModal = true">New Essay</a>
                     </div>
                 </div>
-
                 <!-- End New Document Button -->
 
                 <!-- Content Filter Buttons -->
@@ -110,7 +134,8 @@
 
             <!-- Document Tiles -->
             <div class="row document-group">
-                <div class="card col-md-3" v-for="doc in allDocuments">
+                <div class="card col-md-3" v-for="doc in allDocuments" @click="showDocument(doc)">
+                    <!-- New Document Modal Content -->
                     <h5>{{doc.title}}</h5>
                     <p class="small">{{getDocumentPreviewText(doc.body)}}</p>
                     <p class="small">{{doc.date}}</p>
