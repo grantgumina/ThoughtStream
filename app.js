@@ -39,19 +39,19 @@ Vue.component('note-modal', {
             console.log(this.body);
 
             // Check for title
-            if (this.title == '' || !this.title) {
+            if (this.doc.title == '' || !this.doc.title) {
                 alert('Notes must have a title');
                 return;
             }
 
             // Check for content
-            if (this.body == '' || !this.body) {
+            if (this.doc.body == '' || !this.doc.body) {
                 alert('Notes must have content');
                 return;
             }
 
             // Check for tags
-            if (!this.tags || this.tags.length() == 0) {
+            if (!this.doc.tags || this.doc.tags.length == 0) {
                 alert('Notes must be tagged');
                 return;
             }
@@ -59,10 +59,10 @@ Vue.component('note-modal', {
             // Add to document library
             main.allDocuments.push({
                 'id': main.generateGuid(), // Generate new tag ID
-                'title': this.title,
-                'body': this.body,
+                'title': this.doc.title,
+                'body': this.doc.body,
                 'type': 'note',
-                'tags': this.tags,
+                'tags': this.doc.tags,
                 'date': Date.now()
             });
 
@@ -176,14 +176,7 @@ var main = new Vue({
         ],
 
         // Selected document
-        selectedDoc: {
-            'id': '',
-            'title': '',
-            'body': '',
-            'type': '',
-            'tags': [],
-            'date': '',
-        },
+        selectedDoc: {},
 
         selectedTag: {},
 
@@ -276,7 +269,22 @@ var main = new Vue({
 
         },
 
-        createNewTag: function() {
+        openNewNoteModal: function() {
+            this.selectedDoc = {
+                'id': '',
+                'title': '',
+                'body': '',
+                'type': '',
+                'tags': [],
+                'date': '',
+                'isNewDocument': true,
+            }
+            // Add selected tag to document
+            this.selectedDoc.tags.push(this.selectedTag);
+            this.showNoteModal = true;
+        },
+
+        openNewTagModal: function() {
             console.log(this.allDocuments);
         },
 
