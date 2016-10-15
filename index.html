@@ -25,7 +25,29 @@
     </script>
 
     <!-- New Tag Modal -->
-    <script type="text/x-template" id="new-tag-modal">
+    <script type="text/x-template" id="tag-modal">
+        <modal>
+            <div class="modal-header">
+                <slot name="header">
+                    default header
+                </slot>
+            </div>
+
+            <div class="modal-body">
+                <slot name="body">
+                    <div v-if="errorMessage != ''" class="alert alert-danger" role="alert">{{errorMessage}}</div>
+                    <input class="form-control" v-model="newTag.name" />
+
+                    <button class="btn btn-small modal-default-button" @click="addTag()">
+                        Add
+                    </button>
+
+                    <button class="btn btn-small btn-row modal-default-button" @click="close()">
+                        Close
+                    </button>
+                </slot>
+            </div>
+        </modal>
     </script>
 
     <!-- Note Modal -->
@@ -39,6 +61,7 @@
 
             <div class="modal-body">
                 <slot name="body">
+                    <div v-if="errorMessage != ''" class="alert alert-danger" role="alert">{{errorMessage}}</div>
                     <!-- Tags -->
                     <label class="form-label">
                         Tags
@@ -83,7 +106,7 @@
         </modal>
     </script>
 
-    <!-- navigation bar -->
+    <!-- Navigation Bar -->
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <a class="navbar-brand"></i> ThoughtStream</a>
@@ -94,9 +117,16 @@
 
         <!-- New Document Modal Content -->
         <note-modal v-show="showNoteModal" @close="showNoteModal = false" :doc.sync="selectedDoc">
-            <h3 slot="header">New Document</h3>
+            <h3 v-if="selectedDoc.title" slot="header">{{selectedDoc.title}}</h3>
+            <h3 v-else slot="header">New Note</h3>
         </note-modal>
         <!-- End New Document Modal Content -->
+
+        <!-- Tag Modal Content -->
+        <tag-modal v-show="showTagModal" @close="showTagModal = false">
+            <h3 slot="header">New Tag</h3>
+        </tag-modal>
+        <!-- End Tag Modal Content -->
 
         <!--  Sidebar -->
         <div class="col-sm-3 col-md-2 sidebar">
