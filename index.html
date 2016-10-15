@@ -96,12 +96,12 @@
         <!--  Sidebar -->
         <div class="col-sm-3 col-md-2 sidebar">
             <div class="col-sm-10 col-md-11">
-                <button class="btn btn-block btn-sm btn-info btn-round" id="-gg-new-tag-button"> New Tag </button>
+                <button class="btn btn-block btn-sm btn-info btn-round" id="-gg-new-tag-button" @click="createNewTag()"> New Tag </button>
             </div>
             <br/>
             <h3 class="-gg-sidebar-header">Tags</h3>
-
-            <ul class="nav nav-sidebar" id="tags-list">
+            <ul id="tags-list">
+                <li v-for="tag in allTags" :class="isTagActive(tag)" @click="showDocumentsByTag(tag)" ><a href="#">{{tag.name}}</a></li>
             </ul>
         </div>
         <!--  End sidebar -->
@@ -134,7 +134,7 @@
 
             <!-- Document Tiles -->
             <div class="row document-group">
-                <div class="card col-md-3" v-for="doc in allDocuments" @click="showDocument(doc)">
+                <div class="card col-md-3" v-for="doc in visibleDocuments" @click="showDocument(doc)">
                     <!-- New Document Modal Content -->
                     <h5>{{doc.title}}</h5>
                     <p class="small">{{getDocumentPreviewText(doc.body)}}</p>

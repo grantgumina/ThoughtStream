@@ -5,6 +5,7 @@
 
 /* Cards */
 .card {
+    cursor: pointer;
     background-color: grey;
     margin-top: 15px;
     margin-right: 15px;
@@ -27,6 +28,21 @@ ul.tags {
 
 li.tag {
     margin-bottom: 15px;
+}
+
+/* Tags Sidebar */
+ul#tags-list {
+    padding: 0px;
+}
+
+ul#tags-list li.active {
+    background-color: #ddd;
+}
+
+ul#tags-list li {
+    cursor: pointer;
+    padding: 5px;
+    list-style: none;
 }
 
 /* Document Filters */

@@ -58,7 +58,7 @@ Vue.component('note-modal', {
 
             // Add to document library
             main.allDocuments.push({
-                'id': main.generateGuid(),
+                'id': main.generateGuid(), // Generate new tag ID
                 'title': this.title,
                 'body': this.body,
                 'type': 'note',
@@ -107,14 +107,19 @@ Vue.component('note-modal', {
                 if (t.name.toLowerCase() == this.sanitizedNewTag.name.toLowerCase()) {
                     console.log('Tag already exists');
                     this.newTag = t;
-                    break;
+
+                    // Add new tag to this document
+                    this.doc.tags.push(this.sanitizedNewTag);
+
+                    // Clear input
+                    this.newTag = { id: '', name: '' };
+                    return;
                 }
             }
 
-            // Generate new tag ID =
-            console.log(this.sanitizedNewTag.name);
+            // If we're here, then this is a brand new tag
             this.doc.tags.push(this.sanitizedNewTag);
-            console.log(this.doc.tags);
+            main.allTags.push(this.sanitizedNewTag);
 
             // Clear input
             this.newTag = { id: '', name: '' };
@@ -179,6 +184,29 @@ var main = new Vue({
             'tags': [],
             'date': '',
         },
+
+        selectedTag: {},
+
+    },
+
+    computed: {
+        visibleDocuments: function() {
+            var visibleDocs = [];
+            for (var i = 0; i < this.allDocuments.length; i++) {
+                var doc = this.allDocuments[i];
+                var docTags = doc.tags;
+
+                // Only show documents which have the selected tag
+                for (var j = 0; j < docTags.length; j++) {
+                    var dt = docTags[j];
+                    // If document has selected tag show it
+                    if (dt.id == this.selectedTag.id) {
+                        visibleDocs.push(doc);
+                    }
+                }
+            }
+            return visibleDocs;
+        }
     },
 
     // Anything within the ready function will run when the application loads
@@ -189,6 +217,10 @@ var main = new Vue({
         this.fetchTags();
         console.log("FETCHING DOCUMENT FOR TAGS");
         this.fetchDocumentsForTag();
+
+        if (this.allTags.length > 0) {
+            this.selectedTag = this.allTags[0];
+        }
     },
 
     // Methods we want to use in our application are registered here
@@ -227,6 +259,10 @@ var main = new Vue({
             this.showNoteModal = true;
         },
 
+        showDocumentsByTag: function(tag) {
+            this.selectedTag = tag;
+        },
+
         // Document Filters
         showAll: function(e) {
 
@@ -238,6 +274,19 @@ var main = new Vue({
 
         showEssays: function(e) {
 
+        },
+
+        createNewTag: function() {
+            console.log(this.allDocuments);
+        },
+
+        isTagActive: function(tag) {
+            var result = [];
+            if (tag == this.selectedTag) {
+                result.push('active');
+            }
+
+            return result;
         },
 
         // Helper functions
