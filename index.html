@@ -5,6 +5,7 @@
     <title>Vue</title>
     <!-- CSS -->
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="gitgraph.js/build/gitgraph.css">
     <link rel="stylesheet" href="css/custom.css">
 </head>
 
@@ -110,6 +111,36 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <a class="navbar-brand"></i> ThoughtStream</a>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings <span class="caret"></span></a>
+                    <ul class="dropdown-menu dropdown-form-menu">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="github-repo-url" class="col-sm-2 control-label">Repo URL</label>
+                                <div class="col-sm-10">
+                                    <input v-model="githubRepoURL" type="text" class="form-control" id="github-repo-url" placeholder="Repo URL">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="github-email" class="col-sm-2 control-label">Username</label>
+                                <div class="col-sm-10">
+                                    <input v-model="githubUsername" type="text" class="form-control" id="github-email" placeholder="Username">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="github-password" class="col-sm-2 control-label">Password</label>
+                                <div class="col-sm-10">
+                                    <input v-model="githubPassword" type="password" class="form-control" id="github-password" placeholder="Password">
+                                </div>
+                            </div>
+
+                            <a class="btn btn-primary" @click="authenticateWithGitHub()">Authenticate</a>
+
+                        </form>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </nav>
 
@@ -135,7 +166,7 @@
             </div>
             <br/>
             <h3 class="-gg-sidebar-header">Tags</h3>
-            <ul id="tags-list">
+            <ul id="tags-list" class="pivot-control">
                 <li v-for="tag in allTags" :class="isTagActive(tag)" @click="showDocumentsByTag(tag)" ><a href="#">{{tag.name}}</a></li>
             </ul>
         </div>
@@ -151,18 +182,27 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">New</button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#" @click="openNewNoteModal()">New Note</a>
-                        <a class="dropdown-item" href="#" @click="showNoteModal = true">New Essay</a>
+                        <a class="dropdown-item" href="#" @click="openNewNoteModal()">New Essay</a>
                     </div>
                 </div>
                 <!-- End New Document Button -->
 
                 <!-- Content Filter Buttons -->
-                <ul class="col-md-3 col-md-offset-2 horizontal">
-                    <li><a href="#" @click="showAll()">All</a></li> |
-                    <li><a href="#" @click="showNotes()">Notes</a></li> |
-                    <li><a href="#" @click="showEssays()">Essays</a></li>
+                <ul id="document-filters" class="pivot-control col-md-3 col-md-offset-2 horizontal">
+                    <li :class="isFilterActive('all')"><a href="#" @click="showAll()">All</a></li> |
+                    <li :class="isFilterActive('notes')"><a href="#" @click="showNotes()">Notes</a></li> |
+                    <li :class="isFilterActive('essays')"><a href="#" @click="showEssays()">Essays</a></li>
                 </ul>
                 <!--  End Content Filter Buttons -->
+
+                <!-- Show Git Graph Button -->
+                <div class="col-md-4 text-right">
+                    <button @click="showGitGraph()" type="button" class="btn btn-info">
+                        <span class="glyphicon glyphicon-random" aria-hidden="true"></span>
+                        Git
+                    </button>
+                </div>
+                <!-- End Show Git Graph Button -->
 
             </div>
             <!-- End Row -->
@@ -182,10 +222,13 @@
     </div>
 
     <!-- JS -->
+    <script src="creds.js"></script> <!-- this won't be checked in -->
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="node_modules/vue/dist/vue.js"></script>
     <script src="node_modules/vue-resource/dist/vue-resource.js"></script>
+    <script src="node_modules/github-api/dist/GitHub.bundle.min.js"></script>
+    <script src="gitgraph.js/build/gitgraph.min.js"></script>
     <script src="app.js"></script>
 </body>
 

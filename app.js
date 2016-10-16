@@ -1,3 +1,5 @@
+
+
 // Register modal component
 Vue.component('modal', {
     template: '#modal-template',
@@ -103,10 +105,6 @@ Vue.component('note-modal', {
     methods: {
 
         close: function () {
-
-            console.log('DOC:');
-            console.log(this.doc);
-
             this.$emit('close');
             this.errorMessage = '';
             this.newTag = { id: '', name: '' };
@@ -116,9 +114,6 @@ Vue.component('note-modal', {
         },
 
         addDocument: function() {
-            console.log(this.title);
-            console.log(this.body);
-
             // Check for title
             if (this.doc.title == '' || !this.doc.title) {
                 this.errorMessage = 'Notes must have a title';
@@ -229,6 +224,11 @@ var main = new Vue({
         showJustNotes: false,
         showJustEssays: false,
 
+        // GitHub Info
+        githubRepoURL: '',
+        githubUsername: '',
+        githubPassword: '',
+
         // Tag Model
         tag: { id: '', name: '' },
         allTags: [],
@@ -318,6 +318,13 @@ var main = new Vue({
 
     // Methods we want to use in our application are registered here
     methods: {
+        // GitHub Auth
+        authenticateWithGitHub: function() {
+            console.log("authenticateWithGitHub");
+            const gh = new GitHub();
+            console.log(gh);
+        },
+
         // Get all tags belonging to the user
         fetchTags: function() {
             var tags = [
@@ -341,6 +348,12 @@ var main = new Vue({
         // Get all of the user's documents for a specific tag
         fetchDocumentsForTag: function(tagId) {
 
+        },
+
+        // Show Git Graph Visualization
+        showGitGraph: function() {
+            console.log("showGitGraph");
+            console.log(this.githubRepoURL);
         },
 
         // Show document user clicked on
@@ -388,13 +401,26 @@ var main = new Vue({
         },
 
         openNewTagModal: function() {
-            console.log(this.allDocuments);
             this.showTagModal = true;
         },
 
+        // CSS Class Generator Functions
         isTagActive: function(tag) {
             var result = [];
             if (tag == this.selectedTag) {
+                result.push('active');
+            }
+
+            return result;
+        },
+
+        isFilterActive: function(filterName) {
+            var result = [];
+            if (filterName == 'all' && !this.showJustNotes && !this.showJustEssays) {
+                result.push('active');
+            } else if (filterName == 'notes' && this.showJustNotes && !this.showJustEssays) {
+                result.push('active');
+            } else if (filterName == 'essays' && this.showJustEssays && !this.showJustNotes) {
                 result.push('active');
             }
 

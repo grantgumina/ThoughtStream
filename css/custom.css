@@ -3,6 +3,11 @@
     margin-bottom: 5px;
 }
 
+/* Global Horizontal Lists */
+ul.horizontal li {
+    display:inline;
+}
+
 /* Cards */
 .card {
   background: #fff;
@@ -30,6 +35,12 @@
     margin-right: 5px;
 }
 
+/* Navbar Settings Dropdown */
+.dropdown-form-menu {
+    padding: 15px;
+    width: 500px;
+}
+
 /* Tags */
 ul.tags {
     margin-top: 10px;
@@ -49,19 +60,25 @@ ul#tags-list {
     padding: 0px;
 }
 
-ul#tags-list li.active {
-    background-color: #ddd;
-}
-
-ul#tags-list li {
-    cursor: pointer;
+/* Pivot Controls */
+ul.pivot-control li {
     padding: 5px;
+    cursor: pointer;
     list-style: none;
 }
 
-/* Document Filters */
-ul.horizontal li {
-    display:inline;
+ul.pivot-control a {
+    color: #337ab7;
+}
+
+ul.pivot-control a:focus, ul.pivot-control a:hover {
+    color: #337ab7;
+    text-decoration: none;
+}
+
+ul.pivot-control li.active {
+    background-color: #ddd;
+    text-decoration: none;
 }
 
 /* Sidebar */
