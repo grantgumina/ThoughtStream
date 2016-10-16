@@ -1,2 +1,2 @@
-const username = ""
-const password = ""
+const username = "test"
+const password = "test"
