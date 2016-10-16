@@ -1,4 +1,4 @@
 *.swp
 *.swo
 creds.js
-
+.DS_STORE
