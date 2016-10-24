@@ -360,7 +360,7 @@ var main = new Vue({
             {
                 "id": "x3bxadf2",
                 "name": "music"
-            }];=
+            }];
 
             // Get tags from GitHub repository
             // var ghRepo = gh.getRepo(this.githubUsername, this.githubRepoName);
