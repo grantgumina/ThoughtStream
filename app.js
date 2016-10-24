@@ -1,4 +1,5 @@
-
+// Global GitHub object
+// var gh;
 
 // Register modal component
 Vue.component('modal', {
@@ -226,6 +227,7 @@ var main = new Vue({
 
         // GitHub Info
         githubRepoURL: '',
+        githubRepoName: '',
         githubUsername: '',
         githubPassword: '',
 
@@ -261,6 +263,12 @@ var main = new Vue({
             }
         ],
 
+        // Culture:
+        // "53bbef032639d1dd7fe51b3e4a28d334f85e30df"
+
+        // History:
+        // "cce11e704946ed3165adec49b96459f5819f3665"
+
         // Selected document
         selectedDoc: {},
 
@@ -288,6 +296,7 @@ var main = new Vue({
                         if (this.showJustNotes && doc.type != 'note') {
                             break;
                         }
+
                         // Check to see if there's an essay filter being applied
                         if (this.showJustEssays && doc.type != 'essay') {
                             break;
@@ -306,11 +315,25 @@ var main = new Vue({
     mounted: function() {
         // When the application loads, we want to call the method that initializes
         // some data
+
+        // Populate GitHub info for testing
+        this.githubRepoURL = GITHUB_REPO_URL;
+        this.githubRepoName = GITHUB_REPO_NAME;
+        this.githubUsername = GITHUB_USERNAME;
+        this.githubPassword = GITHUB_PASSWORD;
+
+        gh = new GitHub({
+            username: this.githubUsername,
+            password: this.githubPassword,
+        });
+
         console.log("FETCHING TAGS");
         this.fetchTags();
-        console.log("FETCHING DOCUMENT FOR TAGS");
-        this.fetchDocumentsForTag();
 
+        console.log("FETCHING DOCUMENTS");
+        this.fetchDocuments();
+
+        // If tags exist, select the first one in the list
         if (this.allTags.length > 0) {
             this.selectedTag = this.allTags[0];
         }
@@ -320,29 +343,43 @@ var main = new Vue({
     methods: {
         // GitHub Auth
         authenticateWithGitHub: function() {
-            console.log("authenticateWithGitHub");
-            const gh = new GitHub();
-            console.log(gh);
+            // Create authenticated GitHub object
         },
 
         // Get all tags belonging to the user
         fetchTags: function() {
-            var tags = [
-                {
-                    "id": "rexxxkd0",
-                    "name": "culture"
-                },
-                {
-                    "id": "sfg00sad",
-                    "name": "history"
-                },
-                {
-                    "id": "x3bxadf2",
-                    "name": "music"
-                }
-            ];
 
-            this.allTags = tags;
+            this.allTags = [{
+                "id": "rexxxkd0",
+                "name": "culture"
+            },
+            {
+                "id": "sfg00sad",
+                "name": "history"
+            },
+            {
+                "id": "x3bxadf2",
+                "name": "music"
+            }];=
+
+            // Get tags from GitHub repository
+            // var ghRepo = gh.getRepo(this.githubUsername, this.githubRepoName);
+            // ghRepo.getContents('master', 'tags', true).then(function ({ data: contents }) {
+            //     var jsonString = JSON.stringify(contents)
+            //     var tagObjects = JSON.parse(jsonString);
+            //     main.allTags = tagObjects;
+            //     if (main.allTags.length > 0) {
+            //         main.selectedTag = main.allTags[0];
+            //     }
+            // });
+        },
+
+        // Get all documents belonging to the user
+        fetchDocuments: function() {
+            // var ghRepo = gh.getRepo(this.githubUsername, this.githubRepoName);
+            // ghRepo.getContents('master', '.', true).then(function({ data: contents }) {
+            //     // console.log(contents);
+            // });
         },
 
         // Get all of the user's documents for a specific tag
@@ -353,7 +390,6 @@ var main = new Vue({
         // Show Git Graph Visualization
         showGitGraph: function() {
             console.log("showGitGraph");
-            console.log(this.githubRepoURL);
         },
 
         // Show document user clicked on
