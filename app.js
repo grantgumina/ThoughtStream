@@ -1,6 +1,3 @@
-// Global GitHub object
-// var gh;
-
 // Register modal component
 Vue.component('modal', {
     template: '#modal-template',
@@ -313,19 +310,9 @@ var main = new Vue({
 
     // Anything within the ready function will run when the application loads
     mounted: function() {
+
         // When the application loads, we want to call the method that initializes
         // some data
-
-        // Populate GitHub info for testing
-        this.githubRepoURL = GITHUB_REPO_URL;
-        this.githubRepoName = GITHUB_REPO_NAME;
-        this.githubUsername = GITHUB_USERNAME;
-        this.githubPassword = GITHUB_PASSWORD;
-
-        gh = new GitHub({
-            username: this.githubUsername,
-            password: this.githubPassword,
-        });
 
         console.log("FETCHING TAGS");
         this.fetchTags();
