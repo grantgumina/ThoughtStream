@@ -1,24 +1,63 @@
-allDocuments = [
+allDocuments: [
     {
-        'title': 'JBP - MM1',
-        'body': 'Hello world!',
-        'type': 'note',
-        'tags': [
-            { 'id': 'rexxxkd0', 'name': 'culture' },
-            { 'id': 'sfg00sad', 'name': 'history' }
-        ],
-        'history': [],
-        'date': 'Fri May 04 2015 01:17:07 GMT-0700 (PDT)'
+        'id': 'ddddddd0',
+        'mostRecentRevisionInTagId': { 'sfg00sad' },
+        'revisionIdsByTagId':
+        {
+            'rexxxkd0' : ['rrrrrrr0', 'rrrrrrr1'],
+            'sfg00sad' : ['rrrrrrr0', 'rrrrrrr1', 'rrrrrrr2'],
+            'x3bxadf2' : ['rrrrrrr1', 'rrrrrrr2'],
+        },
     },
-    {
-        'id': '199437adx',
-        'title': 'My Heritage',
-        'body': 'FOOBAR NOOBAR!',
-        'type': 'essay',
-        'tags': [
-            { 'id': 'rexxxkd0', 'name': 'culture' },
-            { 'id': 'x3bxadf2', 'name': 'music' }
-        ],
-        'date': 'Th July 14 2016 05:17:07 GMT-0700 (PDT)'
-    }
+]
+
+revisionsByDocumentId: {
+    'ddddddd0':{
+        'rrrrrrr0': { // REV 1
+            'title': 'My Heritage',
+            'body': 'This is a story about my family.',
+            'type': 'note',
+            'tags': [
+                { 'id': 'rexxxkd0', 'name': 'culture' },
+                { 'id': 'sfg00sad', 'name': 'history' },
+            ],
+            'dateCreated': 'Th July 14 2016 00:00:00 GMT-0700 (PDT)',
+        },
+        'rrrrrrr1': { // REV 2
+            'title': 'My Heritage',
+            'body': 'This is a story about my family. It is s a great story.',
+            'type': 'note',
+            'tags': [
+                { 'id': 'rexxxkd0', 'name': 'culture' },
+                { 'id': 'sfg00sad', 'name': 'history' },
+                { 'id': 'x3bxadf2', 'name': 'family' },
+            ],
+            'dateCreated': 'Fri July 15 2016 00:00:00 GMT-0700 (PDT)',
+        },
+        'rrrrrrr2': { // REV 3
+            'title': 'My Heritage',
+            'body': 'This is a story about my family. It is s a great story. The best ever.',
+            'type': 'note',
+            'tags': [
+                { 'id': 'rexxxkd0', 'name': 'culture' },
+                { 'id': 'sfg00sad', 'name': 'history' },
+                { 'id': 'x3bxadf2', 'name': 'family' },
+            ],
+            'dateCreated': 'Sat July 16 2016 00:00:00 GMT-0700 (PDT)',
+        },
+    },
+};
+
+this.allTags = [{
+    "id": "rexxxkd0",
+    "name": "culture"
+},
+{
+    "id": "sfg00sad",
+    "name": "history"
+},
+{
+    "id": "x3bxadf2",
+    "name": "family"
+},
 ]

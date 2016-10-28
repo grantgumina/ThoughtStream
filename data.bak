@@ -1,0 +1,107 @@
+allDocuments = [
+
+    {
+        'id': 'ddddddd0',
+        'mostRecentRevisionInTagId': { 'sfg00sad' },
+        'revisionsByTagId':
+        {
+            'rexxxkd0' : [
+                { // REV 1
+                    'id': 'xxxxxxx0',
+                    'title': 'My Heritage',
+                    'body': 'This is a story about my family.',
+                    'type': 'note',
+                    'tags': [
+                        { 'id': 'rexxxkd0', 'name': 'culture' },
+                        { 'id': 'sfg00sad', 'name': 'history' },
+                    ],
+                    'dateCreated': 'Th July 14 2016 00:00:00 GMT-0700 (PDT)',
+                },
+                { // REV 2
+                    'id': 'xxxxxxx1',
+                    'title': 'My Heritage',
+                    'body': 'This is a story about my family. It is s a great story.',
+                    'type': 'note',
+                    'tags': [
+                        { 'id': 'rexxxkd0', 'name': 'culture' },
+                        { 'id': 'sfg00sad', 'name': 'history' },
+                        { 'id': 'x3bxadf2', 'name': 'family' },
+                    ],
+                    'dateCreated': 'Fri July 15 2016 00:00:00 GMT-0700 (PDT)',
+                }
+            ],
+            'sfg00sad' : [
+                { // REV 1
+                    'id': 'xxxxxxx0',
+                    'title': 'My Heritage',
+                    'body': 'This is a story about my family.',
+                    'type': 'note',
+                    'tags': [
+                        { 'id': 'rexxxkd0', 'name': 'culture' },
+                        { 'id': 'sfg00sad', 'name': 'history' },
+                    ],
+                    'dateCreated': 'Th July 14 2016 00:00:00 GMT-0700 (PDT)',
+                },
+                { // REV 2
+                    'id': 'xxxxxxx1',
+                    'title': 'My Heritage',
+                    'body': 'This is a story about my family. It is s a great story.',
+                    'type': 'note',
+                    'tags': [
+                        { 'id': 'rexxxkd0', 'name': 'culture' },
+                        { 'id': 'sfg00sad', 'name': 'history' },
+                        { 'id': 'x3bxadf2', 'name': 'family' },
+                    ],
+                    'dateCreated': 'Fri July 15 2016 00:00:00 GMT-0700 (PDT)',
+                },
+                { // REV 3
+                    'id': 'xxxxxxx2',
+                    'title': 'My Heritage',
+                    'body': 'This is a story about my family. It is s a great story. The best ever.',
+                    'type': 'note',
+                    'tags': [
+                        { 'id': 'rexxxkd0', 'name': 'culture' },
+                        { 'id': 'sfg00sad', 'name': 'history' },
+                        { 'id': 'x3bxadf2', 'name': 'family' },
+                    ],
+                    'dateCreated': 'Sat July 16 2016 00:00:00 GMT-0700 (PDT)',
+                },
+            ],
+            'x3bxadf2' : [
+                { // REV 2
+                    'id': 'xxxxxxx1',
+                    'title': 'My Heritage',
+                    'body': 'This is a story about my family. It is s a great story.',
+                    'type': 'note',
+                    'tags': [
+                        { 'id': 'rexxxkd0', 'name': 'culture' },
+                        { 'id': 'sfg00sad', 'name': 'history' },
+                        { 'id': 'x3bxadf2', 'name': 'family' },
+                    ],
+                    'dateCreated': 'Fri July 15 2016 00:00:00 GMT-0700 (PDT)',
+                },
+            ],
+        },
+    },
+
+    {
+
+    }
+
+]
+
+
+
+this.allTags = [{
+    "id": "rexxxkd0",
+    "name": "culture"
+},
+{
+    "id": "sfg00sad",
+    "name": "history"
+},
+{
+    "id": "x3bxadf2",
+    "name": "family"
+},
+]

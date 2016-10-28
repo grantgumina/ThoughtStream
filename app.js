@@ -238,33 +238,53 @@ var main = new Vue({
         // Populating documents with test/dummy data
         allDocuments: [
             {
-                'title': 'JBP - MM1',
-                'body': 'Hello world!',
-                'type': 'note',
-                'tags': [
-                    { 'id': 'rexxxkd0', 'name': 'culture' },
-                    { 'id': 'sfg00sad', 'name': 'history' }
-                ],
-                'date': 'Fri May 04 2015 01:17:07 GMT-0700 (PDT)'
+                'id': 'ddddddd0',
+                'mostRecentRevisionInTagId': 'sfg00sad',
+                'revisionIdsByTagId':
+                {
+                    'rexxxkd0' : ['rrrrrrr0', 'rrrrrrr1'],
+                    'sfg00sad' : ['rrrrrrr0', 'rrrrrrr1', 'rrrrrrr2'],
+                    'x3bxadf2' : ['rrrrrrr1', 'rrrrrrr2'],
+                },
             },
-            {
-                'id': '199437adx',
-                'title': 'My Heritage',
-                'body': 'FOOBAR NOOBAR!',
-                'type': 'essay',
-                'tags': [
-                    { 'id': 'rexxxkd0', 'name': 'culture' },
-                    { 'id': 'x3bxadf2', 'name': 'music' }
-                ],
-                'date': 'Th July 14 2016 05:17:07 GMT-0700 (PDT)'
-            }
         ],
 
-        // Culture:
-        // "53bbef032639d1dd7fe51b3e4a28d334f85e30df"
-
-        // History:
-        // "cce11e704946ed3165adec49b96459f5819f3665"
+        revisionsByDocumentId: {
+            'ddddddd0':{
+                'rrrrrrr0': { // REV 1
+                    'title': 'My Heritage',
+                    'body': 'This is a story about my family.',
+                    'type': 'note',
+                    'tags': [
+                        { 'id': 'rexxxkd0', 'name': 'culture' },
+                        { 'id': 'sfg00sad', 'name': 'history' },
+                    ],
+                    'dateCreated': 'Th July 14 2016 00:00:00 GMT-0700 (PDT)',
+                },
+                'rrrrrrr1': { // REV 2
+                    'title': 'My Heritage',
+                    'body': 'This is a story about my family. It is s a great story.',
+                    'type': 'note',
+                    'tags': [
+                        { 'id': 'rexxxkd0', 'name': 'culture' },
+                        { 'id': 'sfg00sad', 'name': 'history' },
+                        { 'id': 'x3bxadf2', 'name': 'family' },
+                    ],
+                    'dateCreated': 'Fri July 15 2016 00:00:00 GMT-0700 (PDT)',
+                },
+                'rrrrrrr2': { // REV 3
+                    'title': 'My Heritage',
+                    'body': 'This is a story about my family. It is s a great story. The best ever.',
+                    'type': 'note',
+                    'tags': [
+                        { 'id': 'rexxxkd0', 'name': 'culture' },
+                        { 'id': 'sfg00sad', 'name': 'history' },
+                        { 'id': 'x3bxadf2', 'name': 'family' },
+                    ],
+                    'dateCreated': 'Sat July 16 2016 00:00:00 GMT-0700 (PDT)',
+                },
+            },
+        },
 
         // Selected document
         selectedDoc: {},
@@ -276,35 +296,41 @@ var main = new Vue({
 
     computed: {
         visibleDocuments: function() {
+
             var visibleDocs = [];
 
-            // Only show documents which have the selected tag
-            for (var i = 0; i < this.allDocuments.length; i++) {
-                var doc = this.allDocuments[i];
-                var docTags = doc.tags;
+            // var documentRevisionsForSelectedTag = this.allDocuments
 
-                // Search through the document's tags
-                for (var j = 0; j < docTags.length; j++) {
-                    var dt = docTags[j];
+            //
+            // // Only show documents which have the selected tag
+            // for (var i = 0; i < this.allDocuments.length; i++) {
+            //     var doc = this.allDocuments[i];
+            //     var docTags = doc.tags;
+            //
+            //     // Search through the document's tags
+            //     for (var j = 0; j < docTags.length; j++) {
+            //         var dt = docTags[j];
+            //
+            //         // If document has selected tag so show it
+            //         if (dt.id == this.selectedTag.id) {
+            //             // Check to see if there's a note filter being applied
+            //             if (this.showJustNotes && doc.type != 'note') {
+            //                 break;
+            //             }
+            //
+            //             // Check to see if there's an essay filter being applied
+            //             if (this.showJustEssays && doc.type != 'essay') {
+            //                 break;
+            //             }
+            //
+            //             // Add document to visible documents
+            //             visibleDocs.push(doc);
+            //         }
+            //     }
+            // }
+            // return visibleDocs;
 
-                    // If document has selected tag so show it
-                    if (dt.id == this.selectedTag.id) {
-                        // Check to see if there's a note filter being applied
-                        if (this.showJustNotes && doc.type != 'note') {
-                            break;
-                        }
-
-                        // Check to see if there's an essay filter being applied
-                        if (this.showJustEssays && doc.type != 'essay') {
-                            break;
-                        }
-
-                        // Add document to visible documents
-                        visibleDocs.push(doc);
-                    }
-                }
-            }
-            return visibleDocs;
+            return this.allDocuments;
         }
     },
 
@@ -346,27 +372,12 @@ var main = new Vue({
             },
             {
                 "id": "x3bxadf2",
-                "name": "music"
+                "name": "family"
             }];
-
-            // Get tags from GitHub repository
-            // var ghRepo = gh.getRepo(this.githubUsername, this.githubRepoName);
-            // ghRepo.getContents('master', 'tags', true).then(function ({ data: contents }) {
-            //     var jsonString = JSON.stringify(contents)
-            //     var tagObjects = JSON.parse(jsonString);
-            //     main.allTags = tagObjects;
-            //     if (main.allTags.length > 0) {
-            //         main.selectedTag = main.allTags[0];
-            //     }
-            // });
         },
 
         // Get all documents belonging to the user
         fetchDocuments: function() {
-            // var ghRepo = gh.getRepo(this.githubUsername, this.githubRepoName);
-            // ghRepo.getContents('master', '.', true).then(function({ data: contents }) {
-            //     // console.log(contents);
-            // });
         },
 
         // Get all of the user's documents for a specific tag
@@ -452,7 +463,8 @@ var main = new Vue({
 
         // Helper functions
         getDocumentPreviewText: function(documentBody) {
-            return documentBody.substring(0, 12);
+            // return documentBody.substring(0, 12);
+            return 'foobar';
         },
 
         generateGuid: function() {
