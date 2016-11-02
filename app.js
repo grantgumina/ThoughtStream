@@ -89,18 +89,37 @@ Vue.component('note-modal', {
         return {
             newTag: { id: '', name: '' },
             errorMessage: '',
+            selectedRevision: '',
         }
     },
 
     computed: {
         sanitizedNewTag: function() {
             return { 'id': this.newTag.id, 'name': this.newTag.name.trim() };
-        }
+        },
+
+        revisionsList: function() {
+            // console.log('==');
+            // console.log(this.doc);
+            return [];
+        },
     },
 
     props: ['doc'],
 
     methods: {
+
+        showDifferentRevision: function() {
+            console.log("showDifferentRevision");
+
+            
+        },
+
+        getRevisionsList: function() {
+            console.log('==');
+            // var revs = this.doc.revisions[main.selectedTag.id];
+            return [];
+        },
 
         close: function () {
             this.$emit('close');
@@ -145,6 +164,7 @@ Vue.component('note-modal', {
 
         addTag: function() {
             var tag = {};
+            console.log(this.doc);
 
             // Check if tag is null/blank
             if (!this.newTag || this.sanitizedNewTag.name == "") {
@@ -222,66 +242,70 @@ var main = new Vue({
         showJustNotes: false,
         showJustEssays: false,
 
-        // GitHub Info
-        githubRepoURL: '',
-        githubRepoName: '',
-        githubUsername: '',
-        githubPassword: '',
-
         // Tag Model
         tag: { id: '', name: '' },
-        allTags: [],
+        allTags: [{
+            "id": "rexxxkd0",
+            "name": "culture"
+        },
+        {
+            "id": "sfg00sad",
+            "name": "history"
+        },
+        {
+            "id": "x3bxadf2",
+            "name": "family"
+        }],
 
         // Document Model
         doc: { title: '', body: '', type: '', tags: [], date: '' },
 
         // Populating documents with test/dummy data
-        allDocuments: [
-            {
-                'id': 'ddddddd0',
+        allDocuments: {
+            'ddddddd0':{ // document Id
                 'mostRecentRevisionInTagId': 'sfg00sad',
-                'revisionIdsByTagId':
-                {
+                'revisionIdsByTagId': {
                     'rexxxkd0' : ['rrrrrrr0', 'rrrrrrr1'],
                     'sfg00sad' : ['rrrrrrr0', 'rrrrrrr1', 'rrrrrrr2'],
                     'x3bxadf2' : ['rrrrrrr1', 'rrrrrrr2'],
                 },
-            },
-        ],
 
-        revisionsByDocumentId: {
-            'ddddddd0':{
-                'rrrrrrr0': { // REV 1
-                    'title': 'My Heritage',
-                    'body': 'This is a story about my family.',
-                    'type': 'note',
-                    'tags': [
-                        { 'id': 'rexxxkd0', 'name': 'culture' },
-                        { 'id': 'sfg00sad', 'name': 'history' },
-                    ],
-                    'dateCreated': 'Th July 14 2016 00:00:00 GMT-0700 (PDT)',
-                },
-                'rrrrrrr1': { // REV 2
-                    'title': 'My Heritage',
-                    'body': 'This is a story about my family. It is s a great story.',
-                    'type': 'note',
-                    'tags': [
-                        { 'id': 'rexxxkd0', 'name': 'culture' },
-                        { 'id': 'sfg00sad', 'name': 'history' },
-                        { 'id': 'x3bxadf2', 'name': 'family' },
-                    ],
-                    'dateCreated': 'Fri July 15 2016 00:00:00 GMT-0700 (PDT)',
-                },
-                'rrrrrrr2': { // REV 3
-                    'title': 'My Heritage',
-                    'body': 'This is a story about my family. It is s a great story. The best ever.',
-                    'type': 'note',
-                    'tags': [
-                        { 'id': 'rexxxkd0', 'name': 'culture' },
-                        { 'id': 'sfg00sad', 'name': 'history' },
-                        { 'id': 'x3bxadf2', 'name': 'family' },
-                    ],
-                    'dateCreated': 'Sat July 16 2016 00:00:00 GMT-0700 (PDT)',
+                'revisions': {
+                    'rrrrrrr0': { // REV 1
+                        'id': 'ddddddd0',
+                        'title': 'My Heritage',
+                        'body': 'This is a story about my family.',
+                        'type': 'note',
+                        'tags': [
+                            { 'id': 'rexxxkd0', 'name': 'culture' },
+                            { 'id': 'sfg00sad', 'name': 'history' },
+                        ],
+                        'dateCreated': 'Th July 14 2016 00:00:00 GMT-0700 (PDT)',
+                    },
+                    'rrrrrrr1': { // REV 2
+                        'id': 'ddddddd0',
+                        'title': 'My Heritage',
+                        'body': 'This is a story about my family. It is s a great story.',
+                        'type': 'note',
+                        'tags': [
+                            { 'id': 'rexxxkd0', 'name': 'culture' },
+                            { 'id': 'sfg00sad', 'name': 'history' },
+                            { 'id': 'x3bxadf2', 'name': 'family' },
+                        ],
+                        'dateCreated': 'Fri July 15 2016 00:00:00 GMT-0700 (PDT)',
+                    },
+                    'rrrrrrr2': { // REV 3
+                        'id': 'ddddddd0',
+                        'title': 'My Heritage',
+                        'body': 'This is a story about my family. It is s a great story. The best ever.',
+                        'type': 'note',
+                        'tags': [
+                            { 'id': 'rexxxkd0', 'name': 'culture' },
+                            { 'id': 'sfg00sad', 'name': 'history' },
+                            { 'id': 'x3bxadf2', 'name': 'family' },
+                        ],
+                        'dateCreated': 'Sat July 16 2016 00:00:00 GMT-0700 (PDT)',
+                    },
                 },
             },
         },
@@ -299,53 +323,37 @@ var main = new Vue({
 
             var visibleDocs = [];
 
-            // var documentRevisionsForSelectedTag = this.allDocuments
+            // Lol wtf is this hack
+            if (!this.selectedTag.id) {
+                return;
+            }
 
-            //
-            // // Only show documents which have the selected tag
-            // for (var i = 0; i < this.allDocuments.length; i++) {
-            //     var doc = this.allDocuments[i];
-            //     var docTags = doc.tags;
-            //
-            //     // Search through the document's tags
-            //     for (var j = 0; j < docTags.length; j++) {
-            //         var dt = docTags[j];
-            //
-            //         // If document has selected tag so show it
-            //         if (dt.id == this.selectedTag.id) {
-            //             // Check to see if there's a note filter being applied
-            //             if (this.showJustNotes && doc.type != 'note') {
-            //                 break;
-            //             }
-            //
-            //             // Check to see if there's an essay filter being applied
-            //             if (this.showJustEssays && doc.type != 'essay') {
-            //                 break;
-            //             }
-            //
-            //             // Add document to visible documents
-            //             visibleDocs.push(doc);
-            //         }
-            //     }
-            // }
-            // return visibleDocs;
+            // Show only the latest revision for each document
+            for (var docIdKey in this.allDocuments) {
 
-            return this.allDocuments;
+                var doc = this.allDocuments[docIdKey];
+                var revisions = doc.revisionIdsByTagId[this.selectedTag.id];
+                console.log(revisions);
+                var mostRecentRevisionId = revisions[revisions.length - 1];
+                var mostRecentDocumentRevision = doc.revisions[mostRecentRevisionId];
+                var vdoc = mostRecentDocumentRevision;
+                vdoc['revisions'] = revisions;
+                vdoc['latestRevisionId'] = mostRecentRevisionId;
+
+                console.log(vdoc);
+
+                // HERE'S THE PROBELM
+                // NEED TO INCLUDE REVISIONS IN VISIBLE DOCS
+
+                visibleDocs.push(vdoc);
+            }
+
+            return visibleDocs;
         }
     },
 
     // Anything within the ready function will run when the application loads
     mounted: function() {
-
-        // When the application loads, we want to call the method that initializes
-        // some data
-
-        console.log("FETCHING TAGS");
-        this.fetchTags();
-
-        console.log("FETCHING DOCUMENTS");
-        this.fetchDocuments();
-
         // If tags exist, select the first one in the list
         if (this.allTags.length > 0) {
             this.selectedTag = this.allTags[0];
@@ -354,26 +362,9 @@ var main = new Vue({
 
     // Methods we want to use in our application are registered here
     methods: {
-        // GitHub Auth
-        authenticateWithGitHub: function() {
-            // Create authenticated GitHub object
-        },
 
         // Get all tags belonging to the user
         fetchTags: function() {
-
-            this.allTags = [{
-                "id": "rexxxkd0",
-                "name": "culture"
-            },
-            {
-                "id": "sfg00sad",
-                "name": "history"
-            },
-            {
-                "id": "x3bxadf2",
-                "name": "family"
-            }];
         },
 
         // Get all documents belonging to the user
@@ -391,7 +382,8 @@ var main = new Vue({
         },
 
         // Show document user clicked on
-        showDocument: function(doc) {
+        showDocument: function(doc, id) {
+            console.log(id);
             console.log("User clicked on document");
             console.log(doc.title);
 
@@ -463,8 +455,7 @@ var main = new Vue({
 
         // Helper functions
         getDocumentPreviewText: function(documentBody) {
-            // return documentBody.substring(0, 12);
-            return 'foobar';
+            return documentBody.substring(0, 50) + '...';
         },
 
         generateGuid: function() {
