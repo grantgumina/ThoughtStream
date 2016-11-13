@@ -111,8 +111,6 @@ Vue.component('note-modal', {
 
         showDifferentRevision: function() {
             console.log("showDifferentRevision");
-
-
         },
 
         getRevisionsList: function() {
@@ -164,7 +162,6 @@ Vue.component('note-modal', {
 
         addTag: function() {
             var tag = {};
-            console.log(this.doc);
 
             // Check if tag is null/blank
             if (!this.newTag || this.sanitizedNewTag.name == "") {
@@ -263,7 +260,7 @@ var main = new Vue({
         // Populating documents with test/dummy data
         allDocuments: {
             'ddddddd0':{ // document Id
-                'mostRecentRevisionInTagId': 'sfg00sad',
+                'mostRecentRevisionTagId': 'sfg00sad',
                 'revisionIdsByTagId': {
                     'rexxxkd0' : ['rrrrrrr0', 'rrrrrrr1'],
                     'sfg00sad' : ['rrrrrrr0', 'rrrrrrr1', 'rrrrrrr2'],
@@ -332,18 +329,34 @@ var main = new Vue({
             for (var docIdKey in this.allDocuments) {
 
                 var doc = this.allDocuments[docIdKey];
-                var revisions = doc.revisionIdsByTagId[this.selectedTag.id];
-                console.log(revisions);
-                var mostRecentRevisionId = revisions[revisions.length - 1];
-                var mostRecentDocumentRevision = doc.revisions[mostRecentRevisionId];
-                var vdoc = mostRecentDocumentRevision;
+
+                var revisionIdsForCurrentTag = doc.revisionIdsByTagId[this.selectedTag.id];
+                var mostRecentRevisionIdForCurrentTag = revisionIdsForCurrentTag[revisionIdsForCurrentTag.length - 1];
+
+                var vdoc = doc.revisions[mostRecentRevisionIdForCurrentTag];
+
+                var revisions = [];
+                for (var i = 0; i < revisionIdsForCurrentTag.length; i++) {
+                    var revision = {
+                        'id': revisionIdsForCurrentTag[i],
+                        'name': revisionIdsForCurrentTag[i],
+                    };
+
+                    revisions.push(revision);
+                }
+
+                // Get absolute latest revision
+                var revisionIdsForMostRecentlyRevisedTag = doc.revisionIdsByTagId[doc.mostRecentRevisionTagId]
+                var latestRevisionId = revisionIdsForMostRecentlyRevisedTag[revisionIdsForMostRecentlyRevisedTag.length - 1];
+                var latestRevision = {
+                    'id': latestRevisionId,
+                    'name': latestRevisionId + " (newest)",
+                };
+
+                revisions.push(latestRevision);
+
                 vdoc['revisions'] = revisions;
-                vdoc['latestRevisionId'] = mostRecentRevisionId;
-
-                console.log(vdoc);
-
-                // HERE'S THE PROBELM
-                // NEED TO INCLUDE REVISIONS IN VISIBLE DOCS
+                vdoc['mostRecentRevisionIdForCurrentTag'] = mostRecentRevisionIdForCurrentTag;
 
                 visibleDocs.push(vdoc);
             }
