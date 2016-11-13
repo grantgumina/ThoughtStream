@@ -112,7 +112,7 @@ Vue.component('note-modal', {
         showDifferentRevision: function() {
             console.log("showDifferentRevision");
 
-            
+
         },
 
         getRevisionsList: function() {
