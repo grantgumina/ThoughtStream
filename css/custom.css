@@ -118,11 +118,12 @@ ul.pivot-control li.active {
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
+  height: 80%;
 }
 
 .modal-container {
+  position: relative;
   width: 80%;
-  height: 80%;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -139,6 +140,11 @@ ul.pivot-control li.active {
 
 .modal-body {
   margin: 20px 0;
+}
+
+.modal-footer {
+  /*position:absolute;*/
+  /*bottom: 0px;*/
 }
 
 .modal-default-button {
