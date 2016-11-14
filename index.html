@@ -66,17 +66,19 @@
                     <div v-if="errorMessage != ''" class="alert alert-danger" role="alert">{{errorMessage}}</div>
 
                     <!-- Revision Selector -->
-                    <label class="form-label">
-                        Version
-                    </label>
-                    <select v-model="doc.mostRecentRevisionIdForCurrentTag" @change="showDifferentRevision">
-                        <option v-for="revision in doc.revisions" v-bind:value="revision.id">
-                            {{ revision.name }}
-                        </option>
+                    <div v-if="!doc.isNewDocument">
+                        <label class="form-label">
+                            Version
+                        </label>
+                        <select v-model="doc.mostRecentRevisionIdForCurrentTag" @change="showDifferentRevision">
+                            <option v-for="revision in doc.revisions" v-bind:value="revision.id">
+                                {{ revision.name }}
+                            </option>
 
-                    </select>
+                        </select>
 
-                    <br/>
+                        <br/>
+                    </div>
 
                     <!-- Tags -->
                     <label class="form-label">
