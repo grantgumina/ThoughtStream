@@ -1,0 +1,31 @@
+{
+    "manifest_version": 2,
+    "name": "ThoughtStream [BETA]",
+    "short_name": "ThoughtStream [BETA]",
+    "version": "0.0.1",
+
+    "description": "",
+
+    "browser_action": {
+        "default_icon": "img/thought_128.png",
+        "default_popup": "popup.html"
+    },
+
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "<all_urls>",
+        "storage"
+    ],
+
+    "background": {
+        "scripts": ["js/background.js"],
+        "persistent": false
+    },
+
+    "icons": {
+        "16": "img/thought_16.png",
+        "48": "img/thought_48.png",
+        "128": "img/thought_128.png"
+    }
+}
