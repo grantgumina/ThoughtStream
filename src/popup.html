@@ -2,14 +2,36 @@
 <html>
 <head>
     <script src="js/mixpanel.js"></script>
+    <script type="text/javascript" src="bower_components/fuzzy/fuzzy-min.js"></script>
+    <script type="text/javascript" src="bower_components/jquery/dist/js/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/moment.js"></script>
     <script type="text/javascript" src="js/vue.js"></script>
     <script type="text/javascript" src="js/popup.js"></script>
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/popup.css">
 </head>
 <body>
     <div class="container-fluid" id="application">
-        
+        <div class="input-group input-group-sm">
+            <span class="input-group-addon" id="sizing-addon3">Streams</span>
+            <input id="stream-input"
+            type="text"
+            class="form-control"
+            placeholder="Filter/Create"
+            aria-describedby="sizing-addon3"
+            v-model="searchValue"
+            v-on:keydown.enter="createNewStream()"></input>
+        </div>
+
+        <h3>Add site to streams</h3>
+
+        <ul class="streams-list" v-for="stream in filteredStreams">
+            <li>
+                <span>{{stream.name}} ({{stream.documents.length}})</span>
+                <button class="btn btn-xs" v-on:click="addDocumentToStream(stream.name)">+</button>
+            </li>
+        </ul>
     </div>
 </body>
 </html>

@@ -1,6 +1,7 @@
 html, body {
-    width: 400px;
-    padding: 3px;
+    width: 200px;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 
 .toggle {
@@ -10,4 +11,15 @@ html, body {
 
 .container-fluid {
     margin-right: 10px;
+}
+
+.streams-list {
+    padding: 0px;
+}
+
+.streams-list li {
+    margin-top: 5px;
+    list-style: none;
+    color: #1d71c8;
+    cursor: pointer;
 }
